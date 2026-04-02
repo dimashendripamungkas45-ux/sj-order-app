@@ -1,0 +1,45 @@
+# ⚡ QUICK FIX - END TIME ERROR
+
+## 🔴 The Problem
+
+```
+start_time: 10:55
+end_time: 00:55  ❌ This is BEFORE 10:55!
+```
+
+00:55 = 12:55 AM (early morning)
+10:55 = 10:55 AM
+
+❌ Morning is BEFORE afternoon!
+
+---
+
+## ✅ The Solution
+
+Added validation to check: **end_time > start_time**
+
+If not, shows error and blocks submission.
+
+---
+
+## 🚀 Test Now
+
+Use correct times:
+- Start: **10:55** (10:55 AM)
+- End: **11:55** (11:55 AM) ✅
+
+Or:
+- Start: **14:30** (2:30 PM)
+- End: **16:00** (4:00 PM) ✅
+
+---
+
+## ✨ Expected Result
+
+Error fixed! Booking submits successfully. ✅
+
+---
+
+**Status**: ✅ FIXED
+**Action**: Reload (Press R) and try again with correct times!
+

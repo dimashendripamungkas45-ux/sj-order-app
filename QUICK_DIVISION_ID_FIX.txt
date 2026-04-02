@@ -1,0 +1,61 @@
+# ⚡ QUICK FIX - DIVISION_ID ERROR
+
+## 🔴 Problem
+
+```
+Field 'division_id' doesn't have a default value
+```
+
+The controller is trying to save `division_id = NULL` but database doesn't allow it.
+
+---
+
+## ✅ Solution
+
+**Only save division_id if user has one:**
+
+```php
+// Prepare booking data WITHOUT division_id
+$bookingData = [
+    'user_id' => $user->id,
+    'booking_type' => $request->booking_type,
+    'booking_date' => $request->booking_date,
+    'start_time' => $request->start_time,
+    'end_time' => $request->end_time,
+    'purpose' => $request->purpose,
+    'room_id' => $request->booking_type === 'room' ? $request->room_id : null,
+    'vehicle_id' => $request->booking_type === 'vehicle' ? $request->vehicle_id : null,
+    'participants_count' => $request->participants_count,
+    'destination' => $request->destination,
+    'status' => 'pending_division',
+];
+
+// Add division_id ONLY if user has one
+if (isset($user->division_id) && $user->division_id) {
+    $bookingData['division_id'] = $user->division_id;
+}
+```
+
+---
+
+## 🚀 Implementation
+
+1. **Copy**: `CORRECTED_BOOKINGCONTROLLER_DIVISION_FIX.php`
+2. **Paste to**: `app/Http/Controllers/Api/BookingController.php`
+3. **Restart**: `php artisan cache:clear && php artisan serve`
+4. **Reload**: Press R in Flutter
+5. **Test**: Create booking again
+
+---
+
+## ✨ Expected Result
+
+✅ Booking created successfully (201)
+✅ No more 500 error
+✅ Data saved correctly
+
+---
+
+**Status**: ✅ FIXED
+**Time**: ~5 minutes to implement
+

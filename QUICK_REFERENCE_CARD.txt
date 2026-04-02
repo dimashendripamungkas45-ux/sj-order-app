@@ -1,0 +1,219 @@
+# ⚡ QUICK REFERENCE CARD - Approval Bertahap
+
+**Simpan file ini untuk referensi cepat selama implementasi!**
+
+---
+
+## 🎯 FILE YANG HARUS DIBACA (Dalam Urutan)
+
+1. **START_HERE_APPROVAL_SYSTEM.md** (2 menit) - Overview & langkah cepat
+2. **INDEX_IMPLEMENTASI_APPROVAL.md** (3 menit) - Navigation guide
+3. **QUICK_INTEGRATION_CHECKLIST.md** (5 menit) - Copy-paste & test
+4. **DIAGRAM_ALUR_LENGKAP_APPROVAL.md** (sebagai referensi) - Visual diagrams
+
+---
+
+## 📋 BACKEND FILES TO COPY
+
+```bash
+MIGRATION_BOOKINGS_APPROVAL.php
+  └─ database/migrations/2024_02_26_create_bookings_table.php
+
+BACKEND_MODEL_BOOKING_APPROVAL.php
+  └─ app/Models/Booking.php
+
+BACKEND_CONTROLLER_BOOKING_APPROVAL.php
+  └─ app/Http/Controllers/Api/BookingController.php
+
+BACKEND_ROUTES_APPROVAL_WORKFLOW.php
+  └─ routes/api.php (GANTI ISI)
+
+# THEN RUN:
+php artisan migrate
+```
+
+---
+
+## 📋 FRONTEND FILES TO COPY
+
+```dart
+FLUTTER_API_SERVICE_ADDITIONS.dart
+  └─ Merge to: lib/services/api_service.dart
+
+FLUTTER_BOOKING_PROVIDER_ADDITIONS.dart
+  └─ Merge to: lib/providers/booking_provider.dart
+
+lib/screens/booking_approval_screen.dart
+  └─ Copy as new file
+
+lib/screens/booking_list_screen_with_approval.dart
+  └─ Copy as new file
+
+UPDATED_CREATE_BOOKING_SUBMIT_METHOD.dart
+  └─ Update method in: lib/screens/create_booking_screen.dart
+
+# THEN UPDATE:
+lib/main.dart (add routes)
+```
+
+---
+
+## 🧪 QUICK TEST (Copy-Paste)
+
+### Create Booking:
+```bash
+curl -X POST http://localhost:8000/api/bookings \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "booking_type": "room",
+    "booking_date": "2026-03-01",
+    "start_time": "09:00",
+    "end_time": "10:00",
+    "purpose": "Team Meeting",
+    "room_id": 1,
+    "participants_count": 5
+  }'
+```
+
+### Get Bookings:
+```bash
+curl http://localhost:8000/api/bookings \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+### Approve (Division):
+```bash
+curl -X PUT http://localhost:8000/api/bookings/1/approve-division \
+  -H "Authorization: Bearer LEADER_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"action": "approve", "notes": "OK"}'
+```
+
+### Approve (DIVUM):
+```bash
+curl -X PUT http://localhost:8000/api/bookings/1/approve-divum \
+  -H "Authorization: Bearer DIVUM_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"action": "approve", "notes": "OK"}'
+```
+
+---
+
+## 🔐 ROLES & PERMISSIONS
+
+| Role | Can Do |
+|------|--------|
+| **user** | Create booking, view own |
+| **pimpinan_divisi** | Approve tahap 1 |
+| **admin_divum** | Approve tahap 2 |
+
+---
+
+## 📊 STATUS COLORS
+
+```
+Pending: #FFC107 (Kuning ⏳)
+Approved: #4CAF50 (Hijau ✅)
+Rejected: #F44336 (Merah ❌)
+```
+
+---
+
+## ⚠️ COMMON ERRORS & QUICK FIX
+
+| Error | Solusi |
+|-------|--------|
+| Route not found | Run: `php artisan route:clear` |
+| 401 Unauthorized | Token invalid/expired, login lagi |
+| 403 Forbidden | Wrong role, check user.role di DB |
+| 422 Validation | Check booking_date >= today, times valid |
+| Foreign key error | room_id/vehicle_id must exist |
+
+---
+
+## ✅ MINIMAL CHECKLIST
+
+- [ ] Copy 4 backend files
+- [ ] Run migration
+- [ ] Copy 5 frontend files
+- [ ] Update 1 method
+- [ ] Test create booking
+- [ ] Test approval flow
+- [ ] Check database
+
+**Estimated: 20 minutes**
+
+---
+
+## 🎯 WORKFLOW STATES
+
+```
+pending_division
+  ├─ [Approve] → pending_divum
+  └─ [Reject] → rejected_division
+
+pending_divum
+  ├─ [Approve] → approved ✅
+  └─ [Reject] → rejected_divum
+```
+
+---
+
+## 📱 UI COMPONENTS
+
+- **CreateBookingScreen**: Form + submit → POST /api/bookings
+- **BookingListScreen**: List + filtering by role
+- **BookingApprovalScreen**: Detail + approval form
+
+---
+
+## 🔑 DATABASE FIELDS
+
+| Field | Type | Notes |
+|-------|------|-------|
+| status | ENUM(5) | pending_division, pending_divum, approved, rejected_division, rejected_divum |
+| approved_by_division | INT | User ID dari pimpinan divisi |
+| approved_by_divum | INT | User ID dari admin DIVUM |
+| approved_at_division | TIMESTAMP | Kapan diapprove divisi |
+| approved_at_divum | TIMESTAMP | Kapan diapprove DIVUM |
+| division_approval_notes | TEXT | Catatan divisi |
+| divum_approval_notes | TEXT | Catatan DIVUM |
+
+---
+
+## 🚀 IMPLEMENTATION FLOW
+
+```
+1. Read START_HERE_APPROVAL_SYSTEM.md (2 min)
+2. Copy backend files (3 min)
+3. Run migration (1 min)
+4. Copy frontend files (3 min)
+5. Test API (5 min)
+6. Test Flutter UI (5 min)
+```
+
+**Total: ~20 minutes**
+
+---
+
+## 📞 REFERENCE MATRIX
+
+| Butuh Info | File |
+|-----------|------|
+| Struktur DB | MIGRATION_BOOKINGS_APPROVAL.php |
+| Model methods | BACKEND_MODEL_BOOKING_APPROVAL.php |
+| API logic | BACKEND_CONTROLLER_BOOKING_APPROVAL.php |
+| Routes | BACKEND_ROUTES_APPROVAL_WORKFLOW.php |
+| API integration | FLUTTER_API_SERVICE_ADDITIONS.dart |
+| Provider logic | FLUTTER_BOOKING_PROVIDER_ADDITIONS.dart |
+| Workflow diagram | DIAGRAM_ALUR_LENGKAP_APPROVAL.md |
+| Test commands | QUICK_INTEGRATION_CHECKLIST.md |
+| Step-by-step | IMPLEMENTASI_APPROVAL_BERTAHAP_LENGKAP.md |
+
+---
+
+**Simpan card ini untuk referensi cepat! 📌**
+
+Mulai dengan: **START_HERE_APPROVAL_SYSTEM.md**
+

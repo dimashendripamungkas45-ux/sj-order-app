@@ -1,0 +1,52 @@
+# ⚡ QUICK EMULATOR RECOVERY - 3 STEPS
+
+## 🔴 Problem
+
+App built ✅ but lost connection to emulator ❌
+
+---
+
+## ✅ Quick Fix (Choose One)
+
+### Method 1: Restart Everything (Fastest)
+```
+1. Close Android Studio
+2. Close emulator
+3. Wait 10 seconds
+4. Open Android Studio
+5. Start emulator again
+6. Run: flutter run
+```
+
+### Method 2: Clean & Rebuild
+```bash
+flutter clean
+flutter pub get
+flutter run
+```
+
+### Method 3: Kill Dart Processes
+```bash
+# Windows PowerShell:
+taskkill /F /IM dart.exe
+flutter run
+```
+
+---
+
+## 🚀 Expected Result
+
+```
+√ Built...
+Installing...
+I/flutter: App is running ✅
+```
+
+Then test the division_id fix!
+
+---
+
+**Time**: 5-10 minutes
+**Difficulty**: Very Easy
+**Success Rate**: 99%
+

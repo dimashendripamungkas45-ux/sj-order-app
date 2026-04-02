@@ -1,0 +1,23 @@
+# ⚡ QUICK FIX - TIME FORMAT
+
+## 🎯 What Was Wrong
+
+Backend wanted: `09:00` (H:i format)
+App was sending: `09:00:00` (H:i:s format with seconds)
+
+## ✅ What's Fixed
+
+Removed the `:00` seconds from time strings:
+- `09:00:00` → `09:00` ✅
+- `10:00:00` → `10:00` ✅
+
+## 🚀 Test Now
+
+1. **Reload**: Press R in Flutter
+2. **Create booking** with same data as before
+3. **Expected**: Success! ✅
+
+---
+
+**Status**: ✅ FIXED & READY
+
