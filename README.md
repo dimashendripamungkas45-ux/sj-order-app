@@ -527,9 +527,9 @@ Terima kasih kepada:
 
 <div align="center">
 
-**Made with ❤️ by Dimas Hendri Pamungkas**
+**Made with ❤️ by Dimas Hendri Pamungkas** <br>
 ✨ Special thanks to my support system: **Putri Naila** ✨
-
+<br>
 [⬆ Kembali ke Atas](#-sj-order-app---sistem-pemesanan-fasilitas-kantor)
 
 </div>
