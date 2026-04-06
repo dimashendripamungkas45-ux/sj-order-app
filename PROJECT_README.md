@@ -20,7 +20,7 @@ Mobile application untuk booking ruangan dan kendaraan kantor.
 ### Setup (3 menit)
 
 ```bash
-git clone https://github.com/naya030326-del/sj-order-app.git
+git clone https://github.com/dimashendripamungkas45-ux/sj-order-app.git
 cd sj_order_app
 
 flutter pub get
@@ -35,7 +35,7 @@ flutter run
 
 **👉 BACA BACKEND SETUP_GUIDE.md UNTUK TUTORIAL LENGKAP:**
 
-https://github.com/naya030326-del/sj-order-api/blob/main/SETUP_GUIDE.md
+https://github.com/dimashendripamungkas45-ux/sj-order-api/blob/main/SETUP_GUIDE.md
 
 ---
 
@@ -433,5 +433,5 @@ flutter build apk --release
 
 ---
 
-**For complete backend setup, visit:** https://github.com/naya030326-del/sj-order-api
+**For complete backend setup, visit:** https://github.com/dimashendripamungkas45-ux/sj-order-api
 
