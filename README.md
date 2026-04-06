@@ -528,6 +528,7 @@ Terima kasih kepada:
 <div align="center">
 
 **Made with ❤️ by Dimas Hendri Pamungkas**
+✨ Special thanks to my support system: **Putri Naila** ✨
 
 [⬆ Kembali ke Atas](#-sj-order-app---sistem-pemesanan-fasilitas-kantor)
 
