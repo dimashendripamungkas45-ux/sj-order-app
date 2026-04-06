@@ -14,9 +14,11 @@ import 'screens/calendar_screen.dart';
 import 'screens/dashboards/admin_final_approvals_screen.dart';
 import 'screens/pending_approvals_screen.dart';
 import 'screens/daftar_pemesanan_screen.dart';
+import 'screens/user_management_screen.dart';
 import 'providers/user_provider.dart';
 import 'providers/booking_provider.dart';
 import 'providers/role_provider.dart';
+import 'providers/user_management_provider.dart';
 import 'models/booking_model.dart';
 
 void main() {
@@ -33,6 +35,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => BookingProvider()),
         ChangeNotifierProvider(create: (_) => RoleProvider()),
+        ChangeNotifierProvider(create: (_) => UserManagementProvider()),
       ],
       child: MaterialApp(
         title: 'SJ Order App',
@@ -60,6 +63,7 @@ class MyApp extends StatelessWidget {
           '/admin-final-approvals': (context) => const AdminFinalApprovalsScreen(),
           '/pending-approvals': (context) => const PendingApprovalsScreen(),
           '/daftar-pemesanan': (context) => const DaftarPemesananScreen(),
+          '/user-management': (context) => const UserManagementScreen(),
         },
         onGenerateRoute: (settings) {
           if (settings.name == '/booking-detail') {

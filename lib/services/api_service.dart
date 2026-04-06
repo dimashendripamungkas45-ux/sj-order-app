@@ -956,5 +956,241 @@ class ApiService {
       return {'success': false, 'message': 'Error: $e'};
     }
   }
+
+  // USER MANAGEMENT - Get all users
+  static Future<Map<String, dynamic>> getUsers() async {
+    try {
+      final token = await AuthService.getToken();
+      if (token == null) {
+        return {'success': false, 'message': 'Unauthorized'};
+      }
+
+      print('📤 [ApiService.getUsers] Fetching all users...');
+
+      final response = await http.get(
+        Uri.parse('$baseUrl/users'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      ).timeout(const Duration(seconds: 30));
+
+      print('📥 [ApiService.getUsers] Response status: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final List<dynamic> userList = data['data'] ?? [];
+        final users = userList
+            .map((json) => User.fromJson(json as Map<String, dynamic>))
+            .toList();
+
+        print('✅ [ApiService.getUsers] Fetched ${users.length} users');
+        return {
+          'success': true,
+          'users': users,
+          'message': 'Users fetched successfully',
+        };
+      } else if (response.statusCode == 401) {
+        print('❌ [ApiService.getUsers] Unauthorized');
+        return {
+          'success': false,
+          'message': 'Session expired. Please login again.',
+        };
+      } else {
+        print('❌ [ApiService.getUsers] Failed with status ${response.statusCode}');
+        return {
+          'success': false,
+          'message': 'Failed to fetch users',
+        };
+      }
+    } catch (e) {
+      print('❌ [ApiService.getUsers] Exception: $e');
+      return {
+        'success': false,
+        'message': 'Error: $e',
+      };
+    }
+  }
+
+  // USER MANAGEMENT - Create user
+  static Future<Map<String, dynamic>> createUser({
+    required String name,
+    required String email,
+    required String password,
+    required String role,
+    required String status,
+    String? division,
+    String? phoneNumber,
+  }) async {
+    try {
+      final token = await AuthService.getToken();
+      if (token == null) {
+        return {'success': false, 'message': 'Unauthorized'};
+      }
+
+      print('📤 [ApiService.createUser] Creating user: $email');
+
+      final body = {
+        'name': name,
+        'email': email,
+        'password': password,
+        'role': role,
+        'status': status,
+      };
+
+      if (division != null && division.isNotEmpty) {
+        body['division'] = division;
+      }
+      if (phoneNumber != null && phoneNumber.isNotEmpty) {
+        body['phone_number'] = phoneNumber;
+      }
+
+      final response = await http.post(
+        Uri.parse('$baseUrl/users'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode(body),
+      ).timeout(const Duration(seconds: 30));
+
+      print('📥 [ApiService.createUser] Response status: ${response.statusCode}');
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print('✅ [ApiService.createUser] User created successfully');
+        return {
+          'success': true,
+          'user': data['data'],
+          'message': data['message'] ?? 'User created successfully',
+        };
+      } else {
+        final data = jsonDecode(response.body);
+        print('❌ [ApiService.createUser] Error: ${data['message']}');
+        return {
+          'success': false,
+          'message': data['message'] ?? 'Failed to create user',
+        };
+      }
+    } catch (e) {
+      print('❌ [ApiService.createUser] Exception: $e');
+      return {
+        'success': false,
+        'message': 'Error: $e',
+      };
+    }
+  }
+
+  // USER MANAGEMENT - Update user
+  static Future<Map<String, dynamic>> updateUser({
+    required int userId,
+    String? name,
+    String? email,
+    String? role,
+    String? status,
+    String? division,
+    String? phoneNumber,
+  }) async {
+    try {
+      final token = await AuthService.getToken();
+      if (token == null) {
+        return {'success': false, 'message': 'Unauthorized'};
+      }
+
+      print('📤 [ApiService.updateUser] Updating user: $userId');
+
+      final body = <String, dynamic>{};
+      if (name != null) body['name'] = name;
+      if (email != null) body['email'] = email;
+      if (role != null) body['role'] = role;
+      if (status != null) body['status'] = status;
+      if (division != null && division.isNotEmpty) body['division'] = division;
+      if (phoneNumber != null && phoneNumber.isNotEmpty) {
+        body['phone_number'] = phoneNumber;
+      }
+
+      final response = await http.put(
+        Uri.parse('$baseUrl/users/$userId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode(body),
+      ).timeout(const Duration(seconds: 30));
+
+      print('📥 [ApiService.updateUser] Response status: ${response.statusCode}');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+        print('✅ [ApiService.updateUser] User updated successfully');
+        return {
+          'success': true,
+          'user': data['data'],
+          'message': data['message'] ?? 'User updated successfully',
+        };
+      } else {
+        final data = jsonDecode(response.body);
+        print('❌ [ApiService.updateUser] Error: ${data['message']}');
+        return {
+          'success': false,
+          'message': data['message'] ?? 'Failed to update user',
+        };
+      }
+    } catch (e) {
+      print('❌ [ApiService.updateUser] Exception: $e');
+      return {
+        'success': false,
+        'message': 'Error: $e',
+      };
+    }
+  }
+
+  // USER MANAGEMENT - Delete user
+  static Future<Map<String, dynamic>> deleteUser(int userId) async {
+    try {
+      final token = await AuthService.getToken();
+      if (token == null) {
+        return {'success': false, 'message': 'Unauthorized'};
+      }
+
+      print('📤 [ApiService.deleteUser] Deleting user: $userId');
+
+      final response = await http.delete(
+        Uri.parse('$baseUrl/users/$userId'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+          'Accept': 'application/json',
+        },
+      ).timeout(const Duration(seconds: 30));
+
+      print('📥 [ApiService.deleteUser] Response status: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print('✅ [ApiService.deleteUser] User deleted successfully');
+        return {
+          'success': true,
+          'message': data['message'] ?? 'User deleted successfully',
+        };
+      } else {
+        final data = jsonDecode(response.body);
+        print('❌ [ApiService.deleteUser] Error: ${data['message']}');
+        return {
+          'success': false,
+          'message': data['message'] ?? 'Failed to delete user',
+        };
+      }
+    } catch (e) {
+      print('❌ [ApiService.deleteUser] Exception: $e');
+      return {
+        'success': false,
+        'message': 'Error: $e',
+      };
+    }
+  }
 }
 

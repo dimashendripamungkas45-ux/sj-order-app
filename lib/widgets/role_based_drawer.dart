@@ -241,6 +241,14 @@ class RoleBasedDrawer extends StatelessWidget {
                     ),
                   ),
                   ListTile(
+                    leading: const Icon(Icons.people),
+                    title: const Text('Manajemen Pengguna'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.of(context).pushNamed('/user-management');
+                    },
+                  ),
+                  ListTile(
                     leading: const Icon(Icons.analytics),
                     title: const Text('Laporan & Statistik'),
                     onTap: () {
