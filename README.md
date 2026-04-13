@@ -496,7 +496,7 @@ Body: {
 
 Punya pertanyaan atau ditemukan bug?
 
-- 📧 Email: dimashendripamungkas45@gmail.com
+- 📧 Email: support@sj-order-app.com
 - 🐛 GitHub Issues: [Report Bug](https://github.com/dimashendripamungkas45-ux/sj-order-app/issues)
 - 💬 Discussions: [Join Discussion](https://github.com/dimashendripamungkas45-ux/sj-order-app/discussions)
 
@@ -512,7 +512,7 @@ Project ini dilisensikan di bawah **MIT License** - lihat file [LICENSE](LICENSE
 
 **Dimas Hendri Pamungkas**
 - GitHub: [@dimashendripamungkas45-ux](https://github.com/dimashendripamungkas45-ux)
-- Email: dimashendripamungkas45@gmail.com
+- Email: dimashendripamungkas@example.com
 
 ---
 
@@ -527,9 +527,9 @@ Terima kasih kepada:
 
 <div align="center">
 
-**Made with by ** d<br>
-✨ Special thanks to my support system: **p** ✨
-<br>
+**Made with ❤️ by Dimas Hendri Pamungkas**
+✨ Special thanks to my support system: **Putri Naila** ✨
+
 [⬆ Kembali ke Atas](#-sj-order-app---sistem-pemesanan-fasilitas-kantor)
 
 </div>
